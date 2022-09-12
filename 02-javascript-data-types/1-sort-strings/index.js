@@ -5,17 +5,12 @@
  * @returns {string[]}
  */
 export function sortStrings(arr, param = 'asc') {
-  let sorted = [...arr];
-  sorted.sort((a, b) => {
-    if (a[0] !== b[0] && a[0].toLowerCase() === b[0].toLowerCase()) {
-      if (a[0] > b[0]) {return 1;}
-      if (a[0] < b[0]) {return -1;}
-      return 0;
-    }
-    if (a.codePointAt(0) < 128 && b.codePointAt(0) > 128) {return 1;}
-    if (a.codePointAt(0) > 128 && b.codePointAt(0) < 128) {return -1;}
-    return a.localeCompare(b);
+  let direction = {
+    desc: -1,
+    asc: 1,
+  };
+  
+  return [...arr].sort((a, b) => {
+    return direction[param] * a.localeCompare(b, ['ru', 'en'], {caseFirst: 'upper'});
   });
-  if (param === 'desc') {sorted.reverse();}
-  return sorted;
 }
