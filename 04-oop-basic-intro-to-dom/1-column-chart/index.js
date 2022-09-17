@@ -1,5 +1,3 @@
-//import skeleton from './charts-skeleton.svg';
-
 export default class ColumnChart {
 
   constructor(props) {
