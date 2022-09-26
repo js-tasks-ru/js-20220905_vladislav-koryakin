@@ -22,11 +22,3 @@ export function createGetter(path) {
     return getValue(0);
   };
 }
-/* 
-const getter = createGetter('path.here');
-
-console.log(getter({
-  path: {
-    here: 'i'
-  }
-})); */
