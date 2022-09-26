@@ -1,7 +1,6 @@
 export default class SortableTable {
   element;
   subElements;
-  sortedColumn;
 
   constructor(headerConfig = [], data = []) {
     this.headerConfig = headerConfig;
@@ -14,15 +13,11 @@ export default class SortableTable {
     return this.headerConfig
       .map((elem) => {
         return `
-        <div class="sortable-table__cell" data-id="${elem.id}" data-sortable="${
-          elem.sortable
-        }">
+        <div class="sortable-table__cell" data-id="${elem.id}" data-sortable="${elem.sortable}">
           <span>${elem.title}</span>
-          ${
-            this.sortedColumn && this.sortedColumn === elem.id
-              ? '<span class="sort-arrow"></span>'
-              : ""
-          }
+          <span data-element="arrow" class="sortable-table__sort-arrow">
+            <span class="sort-arrow"></span>
+          </span>
         </div>
       `;
       })
@@ -95,15 +90,6 @@ export default class SortableTable {
     return result;
   }
 
-  setArrow(fieldValue, orderValue) {
-    this.sortedColumn = fieldValue;
-    this.subElements.header.innerHTML = this.getHeaderCells();
-    const sortedColumn = this.subElements.header.querySelector(
-      `[data-id='${fieldValue}']`
-    );
-    sortedColumn.dataset.order = orderValue;
-  }
-
   sort(fieldValue = "", orderValue = "asc") {
     this.data = this.sortData(fieldValue, orderValue);
     this.subElements.body.innerHTML = this.getTableRows();
@@ -127,6 +113,17 @@ export default class SortableTable {
           throw new Error(`Unknown sorting type: ${sortType}`);
       }
     });
+  }
+
+  setArrow(fieldValue, orderValue) {
+    const allColumns = this.subElements.header.querySelectorAll('[data-id]');
+    const sortedColumn = this.subElements.header.querySelector(`[data-id='${fieldValue}']`);
+
+    allColumns.forEach(column => {
+      column.dataset.order = '';
+    });
+
+    sortedColumn.dataset.order = orderValue;
   }
 
   remove() {
