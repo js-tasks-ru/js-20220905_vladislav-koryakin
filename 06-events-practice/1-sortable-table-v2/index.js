@@ -139,13 +139,11 @@ export default class SortableTable {
   
 
   sort(fieldValue = "", orderValue = "asc") {
-    console.log(this.subElements.body.firstElementChild, this.subElements.body.lastElementChild);
     if (this.isSortLocally) {
       this.sortOnClient(fieldValue, orderValue);
     } else {
       this.sortOnServer(fieldValue, orderValue);
     }
-    console.log(this.subElements.body.firstElementChild, this.subElements.body.lastElementChild);
   }
   
   sortOnClient(fieldValue, orderValue) {
