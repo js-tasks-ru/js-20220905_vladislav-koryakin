@@ -75,8 +75,6 @@ export default class ColumnChart {
       result[name] = subElement;
     }
 
-    console.log(result);
-
     return result;
   }
 
