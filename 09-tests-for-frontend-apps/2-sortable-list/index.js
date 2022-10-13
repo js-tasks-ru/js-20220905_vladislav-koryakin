@@ -169,6 +169,7 @@ export default class SortableList {
   destroy() {
     this.remove();
     this.element = null;
+    this.placeholder = null;
     this.subElements = null;
   }
 }
